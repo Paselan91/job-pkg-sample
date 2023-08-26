@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.21.12
-// source: proto/post.proto
+// source: post.proto
 
 package post
 
@@ -19,14 +19,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PostService_FetchUser_FullMethodName = "/post.PostService/FetchUser"
+	PostService_FetchPost_FullMethodName = "/post.PostService/FetchPost"
 )
 
 // PostServiceClient is the client API for PostService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type PostServiceClient interface {
-	FetchUser(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*PostResponse, error)
+	FetchPost(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*PostResponse, error)
 }
 
 type postServiceClient struct {
@@ -37,9 +37,9 @@ func NewPostServiceClient(cc grpc.ClientConnInterface) PostServiceClient {
 	return &postServiceClient{cc}
 }
 
-func (c *postServiceClient) FetchUser(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*PostResponse, error) {
+func (c *postServiceClient) FetchPost(ctx context.Context, in *PostRequest, opts ...grpc.CallOption) (*PostResponse, error) {
 	out := new(PostResponse)
-	err := c.cc.Invoke(ctx, PostService_FetchUser_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, PostService_FetchPost_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *postServiceClient) FetchUser(ctx context.Context, in *PostRequest, opts
 // All implementations must embed UnimplementedPostServiceServer
 // for forward compatibility
 type PostServiceServer interface {
-	FetchUser(context.Context, *PostRequest) (*PostResponse, error)
+	FetchPost(context.Context, *PostRequest) (*PostResponse, error)
 	mustEmbedUnimplementedPostServiceServer()
 }
 
@@ -58,8 +58,8 @@ type PostServiceServer interface {
 type UnimplementedPostServiceServer struct {
 }
 
-func (UnimplementedPostServiceServer) FetchUser(context.Context, *PostRequest) (*PostResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method FetchUser not implemented")
+func (UnimplementedPostServiceServer) FetchPost(context.Context, *PostRequest) (*PostResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FetchPost not implemented")
 }
 func (UnimplementedPostServiceServer) mustEmbedUnimplementedPostServiceServer() {}
 
@@ -74,20 +74,20 @@ func RegisterPostServiceServer(s grpc.ServiceRegistrar, srv PostServiceServer) {
 	s.RegisterService(&PostService_ServiceDesc, srv)
 }
 
-func _PostService_FetchUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _PostService_FetchPost_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(PostRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PostServiceServer).FetchUser(ctx, in)
+		return srv.(PostServiceServer).FetchPost(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PostService_FetchUser_FullMethodName,
+		FullMethod: PostService_FetchPost_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PostServiceServer).FetchUser(ctx, req.(*PostRequest))
+		return srv.(PostServiceServer).FetchPost(ctx, req.(*PostRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -100,10 +100,10 @@ var PostService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*PostServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "FetchUser",
-			Handler:    _PostService_FetchUser_Handler,
+			MethodName: "FetchPost",
+			Handler:    _PostService_FetchPost_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "proto/post.proto",
+	Metadata: "post.proto",
 }
