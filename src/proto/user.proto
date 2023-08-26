@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "proto/gen/user";
+
+package user;
+
+service UserService {
+    rpc FetchUser(UserRequest) returns (UserResponse);
+}
+
+message UserRequest {
+    int32 id = 1; // ユーザーID
+}
+
+message UserResponse {
+    int32 id = 1;
+    string name = 2;
+    string email = 3;
+}
+

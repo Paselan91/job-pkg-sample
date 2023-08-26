@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option go_package = "proto/gen/post";
+
+package post;
+
+service PostService {
+    rpc FetchPost(PostRequest) returns (PostResponse);
+}
+
+message PostRequest {
+    int32 id = 1;
+}
+
+message PostResponse {
+    int32 id = 1;
+    string body = 2;
+    string title = 3;
+}
+
